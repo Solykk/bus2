@@ -31,37 +31,29 @@ public class RouteServiceImpl implements RouteService{
     @Transactional
     @Override
     public List<RouteEntity> createRoutes(ArrayList<RouteRequest> routes) {
-        LOG.info("RouteService.createRoutes in: routeRequest[]: " + routes.toString());
         List<RouteEntity> result = new ArrayList<>();
 
         for (RouteRequest route : routes) {
             if(routeRepository.findOneByNumber(route.getNumber()) != null){
-                LOG.warn("  Route with number " + route.getNumber() + " already exist");
                 throw new DuplicateRouteException("Route with number " + route.getNumber() + " already exist");
             }
         }
 
         for (RouteRequest route : routes) {
             if(routeRepository.findOneByNumber(route.getNumber()) == null){
-                LOG.info("  RouteService.createRoutes: findOneByNumber: " + route.getNumber() + " Route == null");
                 List<StopEntity> stops = new ArrayList<>();
                 for (StopRequest stop : route.getStops()) {
                     if(stopService.findOne(stop) != null){
-                        LOG.info("      RouteService.createRoutes: Route == null(if)");
                         stops.add(stopService.findOne(stop));
                     } else {
-                        LOG.info("      RouteService.createRoutes: Route == null(else)");
                         StopEntity stopDb = stopService.createStop(stop);
-                        LOG.info("      RouteService.createRoutes: StopEntityId: " + stopDb.getId());
                         stops.add(stopDb);
                     }
                 }
                 RouteEntity routeEntity = routeRepository.save(new RouteEntity(route.getNumber(), stops));
-                LOG.info("  RouteService.createRoutes: routeEntity add to DB: " + routeEntity.toString());
                 result.add(routeEntity);
             }
         }
-        LOG.info("RouteService.createRoutes before out: result: " + result.toString());
         return result;
     }
 

@@ -25,12 +25,8 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public StationEntity createStation(StationRequest stationRequest) {
-        LOG.info("StationService.createStation in: stationResult: " + stationRequest.toString());
-
         StationEntity stationDb = findOne(stationRequest);
         if(stationDb != null){
-            LOG.warn("  Station with address " + stationRequest.getAddress() + " and coordinate "
-                    + stationRequest.getCoordinate().toString() + " already exist");
             throw new DuplicateStationException("Station with address " + stationRequest.getAddress() + " and coordinate "
                     + stationRequest.getCoordinate().toString() + " already exist");
         }
@@ -38,17 +34,13 @@ public class StationServiceImpl implements StationService {
         StationEntity stationByAd = stationRepository.findOneByAddress(stationRequest.getAddress());
         CoordinateEntity coordinateDb = coordinateService.findOne(stationRequest.getCoordinate());
         if(stationByAd != null && coordinateDb != null && !stationByAd.getCoordinate().equals(coordinateDb)){
-            LOG.warn("  Coordinates " + stationRequest.getCoordinate().toString()+
-                    " do not correspond to the station with address " + stationRequest.getAddress());
             throw new NonCorrespondenceStationCoordinateException("Coordinates " + stationRequest.getCoordinate().toString()+
                     " do not correspond to the station with address " + stationRequest.getAddress());
         }
 
         CoordinateEntity coordinate = coordinateService.createCoordinate(stationRequest.getCoordinate());
         StationEntity station = new StationEntity(stationRequest.getAddress(), coordinate);
-        StationEntity stationResult = stationRepository.save(station);
-        LOG.info("StationService.createStation before out: stationResult: " + stationResult.toString());
-        return stationResult;
+        return stationRepository.save(station);
     }
 
     @Override
@@ -68,17 +60,12 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public StationEntity findOne(StationRequest stationRequest) {
-        LOG.info("StationService.findOne in: stationRequest: " + stationRequest.toString());
         CoordinateEntity coordinateEntity = coordinateService.findOne(stationRequest.getCoordinate());
         if(coordinateEntity == null){
-            LOG.info(   "StationService.findOne: coordinateEntity == null");
             return null;
         }
 
-        StationEntity stationResult = stationRepository.findOneByAddressAndCoordinate_Id(stationRequest.getAddress(),
-                coordinateEntity.getId());
-        LOG.info("StationService.findOne before out: stationResult: " + stationResult.toString());
-        return stationResult;
+        return stationRepository.findOneByAddressAndCoordinate_Id(stationRequest.getAddress(), coordinateEntity.getId());
     }
 
     @Autowired

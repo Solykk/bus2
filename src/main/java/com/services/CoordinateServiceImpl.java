@@ -22,20 +22,14 @@ public class CoordinateServiceImpl implements CoordinateService {
 
     @Override
     public CoordinateEntity createCoordinate(CoordinateRequest coordinateRequest) {
-        LOG.info("CoordinateService.createCoordinate in: coordinateRequest is: " + coordinateRequest.toString());
         if(findCoordinate(coordinateRequest.getLongitude(), coordinateRequest.getLatitude()) != null){
-            LOG.warn("  Coordinate with longitude " + coordinateRequest.getLongitude() +
-                    " and latitude " + coordinateRequest.getLatitude() + " already exist");
             throw new DuplicateCoordinateException("Coordinate with longitude " + coordinateRequest.getLongitude() +
             " and latitude " + coordinateRequest.getLatitude() + " already exist");
         }
 
-        CoordinateEntity coordinate =
-                new CoordinateEntity(coordinateRequest.getLongitude(),
-                                     coordinateRequest.getLatitude());
-        CoordinateEntity coordinateResult = coordinateRepository.save(coordinate);
-        LOG.info("CoordinateService.createCoordinate: before out: coordinateResult: " + coordinateResult.toString());
-        return coordinateResult;
+        CoordinateEntity coordinate = new CoordinateEntity(coordinateRequest.getLongitude(),
+                                                           coordinateRequest.getLatitude());
+        return coordinateRepository.save(coordinate);
     }
 
     @Override

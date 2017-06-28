@@ -26,10 +26,7 @@ public class RouteController {
     //curl -H "Content-Type: application/json" -X POST -d '[{"number":123,"stops":[{"city":"kiev","station":{"address":"Zavodskaya Str, 11","coordinate":{"latitude":123.22,"longitude":122.589}}},{"city":"lvov","station":{"address":"Franka Str, 12","coordinate":{"latitude":23.88,"longitude":12.99}}}]},{"number":567,"stops":[{"city":"berlin","station":{"address":"Munhen Str, 14","coordinate":{"latitude":3.88,"longitude":2.3}}},{"city":"munich","station":{"address":"Ziben Str, 9","coordinate":{"latitude":67.88,"longitude":8.99}}}]}]' http://localhost:8000/routes
     @PostMapping
     public ResponseEntity<?> addRoutes(@RequestBody ArrayList<RouteRequest> routes){
-        LOG.info("---RouteController.addRoutes in");
-        ResponseEntity<?> responseEntity = ResponseEntity.ok(routeService.createRoutes(routes).toString());
-        LOG.info("---RouteController.addRoutes before out: response: " + responseEntity.toString());
-        return responseEntity;
+        return ResponseEntity.ok(routeService.createRoutes(routes).toString());
     }
 
     //curl -X GET localhost:8000/routes
