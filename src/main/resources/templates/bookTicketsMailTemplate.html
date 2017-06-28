@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+body {
+    font-family: arial, sans-serif;
+}
+h2 {
+    text-align: center;
+    color:#199aaf;
+}
+table {
+    margin-top:24px;
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<h2>bus</h2>
+<table>
+    <tr>
+        <th>Бронь</th>
+        <th th:text="${bookingId}"></th>
+    </tr>
+    <tr>
+        <td>Откуда</td>
+        <td th:text="${startCity}"></td>
+    </tr>
+    <tr>
+        <td>Куда</td>
+        <td th:text="${endCity}"></td>
+    </tr>
+    <tr>
+        <td>Дата выезда</td>
+        <td th:text="${startDate}"></td>
+    </tr>
+    <tr>
+        <td>Дата возврата</td>
+        <td th:text="${returnDate}"></td>
+    </tr>
+    <tr>
+        <td>Количество пассажиров</td>
+        <td th:text="${passengers}"></td>
+    </tr>
+    <tr>
+        <td>Тариф</td>
+        <td th:text="${rate}"></td>
+    </tr>
+    <tr>
+        <td>Итоговая стоимость</td>
+        <td th:text="${price}"></td>
+    </tr>
+    <tr>
+        <td>Имя</td>
+        <td th:text="${name}"></td>
+    </tr>
+    <tr>
+        <td>Фамилия</td>
+        <td th:text="${surname}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="${email}"></td>
+    </tr>
+    <tr>
+        <td>Телефон</td>
+        <td th:text="${phone}"></td>
+    </tr>
+    <tr>
+        <td>Сообщение</td>
+        <td th:text="${message}"></td>
+    </tr>
+    <tr>
+        <td>Бронь сделана</td>
+        <td th:text="${bookingDate}"></td>
+    </tr>
+</table>
+</body>
+</html>

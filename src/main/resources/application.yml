@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev-solykk
+  jpa:
+    hibernate.ddl-auto: update
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  mail:
+    host: smtp.gmail.com
+    username: t@j.com
+    password: xxx
+    properties.mail.smtp:
+      auth: true
+      socketFactory.port: 465
+      ssl.enable: true
+      socketFactory:
+        class: javax.net.ssl.SSLSocketFactory
+        fallback: false
+
+server:
+  port: 8000
+
+---
+mail:
+  toAddress: t@j.com
+---
+
+spring:
+  profiles: dev-solykk
+  datasource.url: jdbc:postgresql://localhost:5432/autolinedb
+  datasource.username: postgres
+  datasource.password: postgres
